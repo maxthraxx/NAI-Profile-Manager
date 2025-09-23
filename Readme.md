@@ -77,7 +77,7 @@ You can close it anytime by clicking the × button or clicking outside.
 
 Let’s say you made a cool prompt and want to save it:
 
-1. Type your prompt in the NovelAI input box.
+1. Type your prompt in the Prompt input box.
 2. Open the panel (click 📝).
 3. Click **"New"** → type a name like `Cute Waifu Outdoor`.
 4. Click **"Save"** → done!
@@ -106,25 +106,88 @@ Try `Ctrl+Q`, then type “cyberpunk” — it’ll find any profile with that w
 
 ---
 
-### 5. **Use Variables Like a Pro: `{variable}`**
+Tentu! Berikut adalah **versi lengkap dan diperbarui dari bagian `### 5. Use Variables Like a Pro: {variable}`** untuk `README.md` kamu, termasuk penjelasan tentang fitur `{DB}` yang sangat berguna.
 
-Want to reuse the same base prompt but change parts of it?
+Saya tulis dengan gaya bahasa Inggris yang natural, mudah dimengerti, dan terdengar seperti ditulis oleh manusia — bukan AI.
 
-Write something like:
-{character}, {outfit}, anime girl, detailed eyes, soft lighting, masterpiece
+---
 
+### 5. **Use Variables Like a Pro: `{variable}` and `{DB}`**
 
-When you click **"Apply"**, a popup asks:
-> _“What should {character} be?”_  
-> _“What about {outfit}?”_
+Want to reuse the same base prompt but change small details like character name, outfit, or mood?
 
-Fill them in → the script replaces the placeholders and sends the final prompt.
+This script lets you use **placeholders** (called variables) that get filled in when you apply the prompt.
 
-Perfect for keeping structure while changing details.
+#### ✅ How It Works
 
-> ✅ Variables are filled **in order** — matches how they appear in your text.
->
-> ❌ Empty variables (left blank) are removed cleanly, including trailing commas.
+1. Write your prompt with variables wrapped in curly braces:
+   ```
+   {character}, cute anime girl, {outfit}, detailed face, soft lighting, masterpiece
+   ```
+
+2. When you click **"Apply"**, a popup appears asking:
+   > _“What should {character} be?”_  
+   > _“What about {outfit}?”_
+
+3. Fill them in → the script replaces each placeholder and sends the final version to NovelAI.
+
+Perfect for keeping your favorite structure while changing just a few parts every time.
+
+> 💡 Example:  
+> You save a profile called `Default Masterpiece`.  
+> Every time you use it, you type in a new character and outfit → fresh prompt, zero effort.
+
+---
+
+#### 🌟 Bonus Feature: `{DB}` – Pull Tags from Danbooru Posts
+
+There’s a special variable: `{DB}` — and it’s **super powerful**.
+
+It lets you pull real tags from any [Danbooru](https://danbooru.donmai.us) post — perfect when you see an image you love and want *that exact style*.
+
+##### 🔧 How to Use `{DB}`
+
+1. In your saved prompt, add `{DB}` where you want the tags:
+   ```
+   {character}, {DB}, high quality, anime, detailed eyes
+   ```
+
+2. When you click **"Apply"**, the popup will show:
+   - Input fields for `{character}`
+   - **Plus a field for "DB (Danbooru ID)"**
+
+3. Enter a Danbooru post ID (like `789532`) → click Apply.
+
+4. The script:
+   - Fetches all tags from that post
+   - Removes junk (artist names, ratings, etc.)
+   - Joins them into a clean list
+   - Replaces `{DB}` with those tags
+
+So if the post has tags like `solo, blue_eyes, school_uniform`, they’ll be inserted automatically.
+
+> ✅ Result:  
+> Your prompt becomes:  
+> `Nami, solo, blue_eyes, school_uniform, high quality, anime, detailed eyes`
+
+No more guessing what tags might work — just steal them from real posts.
+
+---
+
+#### 📝 Tips for Best Results
+
+| Tip | Why It Helps |
+|-----|--------------|
+| Keep variable names simple | Use `{char}` instead of `{main_character_name}` |
+| Put `{DB}` near the end | So pulled tags blend naturally with your base prompt |
+| Don’t overuse variables | 2–3 per prompt is ideal for clarity |
+| Combine with Ctrl+Q | Search for profiles using `{DB}` fast |
+
+---
+
+With `{variable}` and `{DB}`, you’re not just saving prompts — you’re building smart templates that adapt every time you use them.
+
+That’s next-level prompt crafting.
 
 ---
 
