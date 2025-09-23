@@ -1,6 +1,6 @@
 # NovelAI Prompt Profiles (Ultimate) 🚀
 
-A full-featured Tampermonkey script that turns prompt writing on [NovelAI Image](https://novelai.github.io/image) from a chore into something fast, fun, and repeatable.
+A full-featured Tampermonkey script that turns prompt writing on [NovelAI Image](https://novelai.net/image) from a chore into something fast, fun, and repeatable.
 
 No more:
 - Copy-pasting prompts from Discord or Notepad
@@ -38,11 +38,11 @@ And yes — it remembers your last used profile, lets you drag the icon around, 
    *(Tampermonkey will pop up and ask if you want to add it)*
 
 3. Click “Install”, then go to:  
-   → [https://novelai.github.io/image](https://novelai.github.io/image)
+   → [https://novelai.net/image](https://novelai.net/image)
 
 You’ll see a small 📝 icon in the corner. That’s your control center.
 
-> ⚠️ The script only works on `https://novelai.github.io/image`
+> ⚠️ The script only works on `https://novelai.net/image`
 
 ---
 
