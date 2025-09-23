@@ -43,6 +43,7 @@ And yes — it remembers your last used profile, lets you drag the icon around, 
    → [https://novelai.net/image](https://novelai.net/image)
 
 You’ll see a small 📝 icon in the corner. That’s your control center.
+If you dont see the icon, go to **Extensions > Manage Extensions > Enable Developer Mode > then click Details on Tampermonkey > and Enable Allow User Scripts**
 
 > ⚠️ The script only works on `https://novelai.net/image`
 
