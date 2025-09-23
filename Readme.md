@@ -36,7 +36,7 @@ And yes — it remembers your last used profile, lets you drag the icon around, 
    → [tampermonkey.net](https://www.tampermonkey.net/) (works on Chrome, Firefox, Edge)
 
 2. **Click this link:**  
-   → [Install Script](https://raw.githubusercontent.com/yourname/yourrepo/main/novelai-prompt-profiles.user.js)  
+   → [Install Script](https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js)  
    *(Tampermonkey will pop up and ask if you want to add it)*
 
 3. Click “Install”, then go to:  
