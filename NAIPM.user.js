@@ -1045,17 +1045,17 @@ function compareVersions(v1, v2) {
 }
 
 (function checkUpdate() {
-    const currentVersion = '1.1'; // Harus sama dengan @version
+    const currentVersion = '1.1'; // Must match @version exactly
     const scriptURL = 'https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js';
 
-    // Cek 3 detik setelah halaman muat
+    // Check for updates 3 seconds after page loads
     setTimeout(async () => {
         try {
             const res = await fetch(scriptURL + '?t=' + Date.now(), { cache: 'no-cache' });
             const text = await res.text();
             const match = text.match(/@version\s+([0-9.]+)/);
             if (!match) {
-                console.warn("Tidak bisa baca @version dari updateURL");
+                console.warn("Failed to read @version from updateURL");
                 return;
             }
 
@@ -1063,7 +1063,7 @@ function compareVersions(v1, v2) {
             const comparison = compareVersions(latestVersion, currentVersion);
 
             if (comparison > 0) {
-                // Cegah duplikasi notifikasi
+                // Prevent duplicate notices
                 if (document.getElementById('nai-update-notice')) return;
 
                 const notice = document.createElement('div');
@@ -1108,7 +1108,7 @@ function compareVersions(v1, v2) {
                 };
             }
         } catch (e) {
-            console.warn('Gagal cek update otomatis:', e);
+            console.warn('Failed to check for automatic updates:', e);
         }
     }, 3000);
 })();
