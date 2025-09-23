@@ -13,7 +13,7 @@ This is your **personal prompt vault** — right inside the page, ready when you
 
 ---
 
-## 🔧 What It Does (In Plain English)
+## 🔧 What It Does
 
 Imagine having a library of pre-written prompts. You pick one, tweak a few details (like character name or outfit), and *poof* — it’s in the editor.
 
