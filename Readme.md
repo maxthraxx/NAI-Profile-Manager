@@ -9,6 +9,8 @@ No more:
 
 This is your **personal prompt vault** — right inside the page, ready when you are.
 
+![Panel utama dalam mode terang]([screenshots/panel-light.png](https://github.com/mikojiy/NAI-Profile-Manager/blob/main/Screenshot.png))
+
 ---
 
 ## 🔧 What It Does (In Plain English)
