@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name         NovelAI Prompt Profiles
 // @namespace    http://tampermonkey.net/
+// @updateURL    https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js
+// @downloadURL  https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js
 // @version      3.55
 // @description  Fixed: variable order + Danbooru by ID button restored
 // @match        https://novelai.net/image
