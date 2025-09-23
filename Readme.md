@@ -106,12 +106,6 @@ Try `Ctrl+Q`, then type “cyberpunk” — it’ll find any profile with that w
 
 ---
 
-Tentu! Berikut adalah **versi lengkap dan diperbarui dari bagian `### 5. Use Variables Like a Pro: {variable}`** untuk `README.md` kamu, termasuk penjelasan tentang fitur `{DB}` yang sangat berguna.
-
-Saya tulis dengan gaya bahasa Inggris yang natural, mudah dimengerti, dan terdengar seperti ditulis oleh manusia — bukan AI.
-
----
-
 ### 5. **Use Variables Like a Pro: `{variable}` and `{DB}`**
 
 Want to reuse the same base prompt but change small details like character name, outfit, or mood?
