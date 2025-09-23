@@ -139,7 +139,6 @@ Then applies them to the editor in one click.
 Bonus:
 - Remembers the last ID you used
 - Filters out junk tags (artist:, _:score, etc.)
-- Limits to 30 clean tags max (to avoid overflow)
 - Works only with **danbooru.donmai.us**
 
 If the site is down or your internet drops, it tells you clearly.
