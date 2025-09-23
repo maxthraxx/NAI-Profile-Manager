@@ -1017,6 +1017,83 @@ Pick number (1-${matches.length}):`
                     }
                 }
             }
+
+// ================================
+// 🔔 NOTIFIKASI UPDATE OTOMATIS
+// ================================
+(function checkUpdate() {
+    const currentVersion = '1.0'; // Ganti sesuai @version
+    const scriptURL = 'https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js';
+
+    setTimeout(async () => {
+        try {
+            const res = await fetch(scriptURL + '?t=' + Date.now());
+            const text = await res.text();
+            const match = text.match(/@version\s+([0-9.]+)/);
+            if (!match) return;
+
+            const latestVersion = match[1];
+            if (compareVersions(latestVersion, currentVersion) > 0) {
+                if (!document.getElementById('nai-update-notice')) {
+                    const notice = document.createElement('div');
+                    notice.id = 'nai-update-notice';
+                    Object.assign(notice.style, {
+                        position: 'fixed',
+                        top: '30px',
+                        right: '30px',
+                        zIndex: '99999',
+                        background: '#1e40af',
+                        color: 'white',
+                        padding: '16px 20px',
+                        borderRadius: '12px',
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+                        maxWidth: '380px',
+                        fontFamily: 'sans-serif',
+                        fontSize: '14px',
+                        lineHeight: '1.5'
+                    });
+
+                    notice.innerHTML = `
+                        <b>🎉 Update Tersedia!</b><br>
+                        Versi ${latestVersion} siap dipakai.<br>
+                        Kamu masih pakai v${currentVersion}.<br>
+                        <button id="update-now" style="
+                            margin-top: 10px;
+                            padding: 8px 14px;
+                            background: white;
+                            color: #1e40af;
+                            border: none;
+                            borderRadius: 8px;
+                            fontWeight: bold;
+                            cursor: pointer;
+                        ">Update Sekarang</button>
+                    `;
+                    document.body.appendChild(notice);
+
+                    document.getElementById('update-now').onclick = () => {
+                        window.open(scriptURL, '_blank');
+                        notice.remove();
+                    };
+                }
+            }
+        } catch (e) {
+            console.warn('Gagal cek update:', e);
+        }
+    }, 3000); // Cek 3 detik setelah halaman muat
+})();
+
+function compareVersions(v1, v2) {
+    const a = v1.split('.').map(Number);
+    const b = v2.split('.').map(Number);
+    for (let i = 0; i < Math.max(a.length, b.length); i++) {
+        const num1 = a[i] || 0;
+        const num2 = b[i] || 0;
+        if (num1 > num2) return 1;
+        if (num1 < num2) return -1;
+    }
+    return 0;
+}
+            
         });
     }
 
