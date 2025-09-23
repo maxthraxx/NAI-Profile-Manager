@@ -202,10 +202,10 @@ Handy if you always use the same one.
 ### 12. **Status Messages (Top Bar)**
 
 The top bar gives feedback like:
-- `"Siap menggunakan 🎯"` → Ready
-- `"🔧 Menerapkan..."` → Applying...
-- `"✅ Berhasil"` → Success
-- `"❌ Gagal"` → Error
+- Ready
+- Applying...
+- Success
+- Error
 
 All short, clear, and helpful.
 
