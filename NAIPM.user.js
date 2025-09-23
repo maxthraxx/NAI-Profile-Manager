@@ -1017,71 +1017,21 @@ Pick number (1-${matches.length}):`
                     }
                 }
             }
+            
+        });
+    }
+
+    // Init
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createPanelOnce);
+    } else {
+        createPanelOnce();
+    }
+})();
 
 // ================================
 // 🔔 AUTO UPDATE NOTIFICATION
 // ================================
-(function checkUpdate() {
-    const currentVersion = '1.1'; // Keep this matching your @version
-    const scriptURL = 'https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js';
-
-    setTimeout(async () => {
-        try {
-            const res = await fetch(scriptURL + '?t=' + Date.now());
-            const text = await res.text();
-            const match = text.match(/@version\s+([0-9.]+)/);
-            if (!match) return;
-
-            const latestVersion = match[1];
-            if (compareVersions(latestVersion, currentVersion) > 0) {
-                if (!document.getElementById('nai-update-notice')) {
-                    const notice = document.createElement('div');
-                    notice.id = 'nai-update-notice';
-                    Object.assign(notice.style, {
-                        position: 'fixed',
-                        top: '30px',
-                        right: '30px',
-                        zIndex: '99999',
-                        background: '#1e40af',
-                        color: 'white',
-                        padding: '16px 20px',
-                        borderRadius: '12px',
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
-                        maxWidth: '380px',
-                        fontFamily: 'sans-serif',
-                        fontSize: '14px',
-                        lineHeight: '1.5'
-                    });
-
-                    notice.innerHTML = `
-                        <b>🎉 Update Available!</b><br>
-                        Version ${latestVersion} is ready.<br>
-                        You're still on v${currentVersion}.<br>
-                        <button id="update-now" style="
-                            margin-top: 10px;
-                            padding: 8px 14px;
-                            background: white;
-                            color: #1e40af;
-                            border: none;
-                            borderRadius: 8px;
-                            fontWeight: bold;
-                            cursor: pointer;
-                        ">Update Now</button>
-                    `;
-                    document.body.appendChild(notice);
-
-                    document.getElementById('update-now').onclick = () => {
-                        window.open(scriptURL, '_blank');
-                        notice.remove();
-                    };
-                }
-            }
-        } catch (e) {
-            console.warn('Failed to check for updates:', e);
-        }
-    }, 3000); // Check 3 seconds after page loads
-})();
-
 function compareVersions(v1, v2) {
     const a = v1.split('.').map(Number);
     const b = v2.split('.').map(Number);
@@ -1093,14 +1043,72 @@ function compareVersions(v1, v2) {
     }
     return 0;
 }
-            
-        });
-    }
 
-    // Init
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', createPanelOnce);
-    } else {
-        createPanelOnce();
-    }
+(function checkUpdate() {
+    const currentVersion = '1.1'; // Harus sama dengan @version
+    const scriptURL = 'https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js';
+
+    // Cek 3 detik setelah halaman muat
+    setTimeout(async () => {
+        try {
+            const res = await fetch(scriptURL + '?t=' + Date.now(), { cache: 'no-cache' });
+            const text = await res.text();
+            const match = text.match(/@version\s+([0-9.]+)/);
+            if (!match) {
+                console.warn("Tidak bisa baca @version dari updateURL");
+                return;
+            }
+
+            const latestVersion = match[1];
+            const comparison = compareVersions(latestVersion, currentVersion);
+
+            if (comparison > 0) {
+                // Cegah duplikasi notifikasi
+                if (document.getElementById('nai-update-notice')) return;
+
+                const notice = document.createElement('div');
+                notice.id = 'nai-update-notice';
+                Object.assign(notice.style, {
+                    position: 'fixed',
+                    top: '30px',
+                    right: '30px',
+                    zIndex: '99999',
+                    background: '#1e40af',
+                    color: 'white',
+                    padding: '16px 20px',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+                    maxWidth: '380px',
+                    fontFamily: 'sans-serif',
+                    fontSize: '14px',
+                    lineHeight: '1.5'
+                });
+
+                notice.innerHTML = `
+                    <b>🎉 Update Available!</b><br>
+                    Version <strong>v${latestVersion}</strong> is out.<br>
+                    You're on <strong>v${currentVersion}</strong>.<br>
+                    <button id="update-now" style="
+                        margin-top: 10px;
+                        padding: 8px 14px;
+                        background: white;
+                        color: #1e40af;
+                        border: none;
+                        borderRadius: 8px;
+                        fontWeight: bold;
+                        cursor: pointer;
+                    ">Update Now</button>
+                `;
+
+                document.body.appendChild(notice);
+
+                document.getElementById('update-now').onclick = () => {
+                    window.open(scriptURL, '_blank');
+                    notice.remove();
+                };
+            }
+        } catch (e) {
+            console.warn('Gagal cek update otomatis:', e);
+        }
+    }, 3000);
 })();
