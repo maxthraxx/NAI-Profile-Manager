@@ -1022,7 +1022,7 @@ Pick number (1-${matches.length}):`
 // 🔔 AUTO UPDATE NOTIFICATION
 // ================================
 (function checkUpdate() {
-    const currentVersion = '1.0'; // Keep this matching your @version
+    const currentVersion = '1.1'; // Keep this matching your @version
     const scriptURL = 'https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js';
 
     setTimeout(async () => {
