@@ -520,7 +520,6 @@
                             const tagString = [...new Set(tags)]
                                 .map(t => t.replace(/_/g, ' ').trim())
                                 .filter(t => t)
-                                .slice(0, 30)
                                 .join(", ");
 
                             filled = filled.replace(/\{DB\}/g, tagString);
