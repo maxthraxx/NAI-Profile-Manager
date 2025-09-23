@@ -302,26 +302,14 @@ It doesn’t just save time — it makes prompt crafting **actually enjoyable**.
 
 ---
 
-## 🛠 Future Ideas (For You, the Creator)
+🛠 Still Under Development
+I’m actively maintaining and improving this script based on real feedback and my own use.
+New features, fixes, and quality-of-life tweaks are always on the way.
 
-Since you're maintaining this, here are some ideas:
-- Add support for Safebooru / Gelbooru
-- Sync profiles via Google Drive (advanced)
-- Let users assign hotkeys per profile
-- Add per-profile settings (model, noise schedule, etc.)
+So if something’s not working, feels clunky, or you have an idea that could make prompt management even smoother — I want to hear it.
 
-But honestly? Right now, it already does **everything most people need**.
+💬 Don’t Hesitate to Report Bugs or Suggest Features
+Found a bug? Got a feature request? Just want to say hi?
 
----
-
-## 🌟 Enjoying the Script?
-
-If this saves you hours of frustration, consider:
-- Sharing it with friends
-- Adding a Star ⭐ on GitHub
-- Leaving a comment saying “thanks” (makes my day)
-
-And if you ever fork it or build your own version — go wild. That’s what open source is for.
-
-Now go make some amazing art.  
-You’ve got the tools. 💫
+Please don’t hesitate to reach out.
+Every message helps make this tool better for everyone.
