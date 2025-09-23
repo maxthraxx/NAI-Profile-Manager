@@ -3,8 +3,8 @@
 // @namespace    http://tampermonkey.net/
 // @updateURL    https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js
 // @downloadURL  https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js
-// @version      1.0
-// @description  NovelAI Prompt Manager All in One Profiles
+// @version      1.1
+// @description  Prompt profiles made easy for NovelAI
 // @match        https://novelai.net/image
 // @grant        none
 // ==/UserScript==
@@ -1019,10 +1019,10 @@ Pick number (1-${matches.length}):`
             }
 
 // ================================
-// 🔔 NOTIFIKASI UPDATE OTOMATIS
+// 🔔 AUTO UPDATE NOTIFICATION
 // ================================
 (function checkUpdate() {
-    const currentVersion = '1.0'; // Ganti sesuai @version
+    const currentVersion = '1.0'; // Keep this matching your @version
     const scriptURL = 'https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js';
 
     setTimeout(async () => {
@@ -1054,9 +1054,9 @@ Pick number (1-${matches.length}):`
                     });
 
                     notice.innerHTML = `
-                        <b>🎉 Update Tersedia!</b><br>
-                        Versi ${latestVersion} siap dipakai.<br>
-                        Kamu masih pakai v${currentVersion}.<br>
+                        <b>🎉 Update Available!</b><br>
+                        Version ${latestVersion} is ready.<br>
+                        You're still on v${currentVersion}.<br>
                         <button id="update-now" style="
                             margin-top: 10px;
                             padding: 8px 14px;
@@ -1066,7 +1066,7 @@ Pick number (1-${matches.length}):`
                             borderRadius: 8px;
                             fontWeight: bold;
                             cursor: pointer;
-                        ">Update Sekarang</button>
+                        ">Update Now</button>
                     `;
                     document.body.appendChild(notice);
 
@@ -1077,9 +1077,9 @@ Pick number (1-${matches.length}):`
                 }
             }
         } catch (e) {
-            console.warn('Gagal cek update:', e);
+            console.warn('Failed to check for updates:', e);
         }
-    }, 3000); // Cek 3 detik setelah halaman muat
+    }, 3000); // Check 3 seconds after page loads
 })();
 
 function compareVersions(v1, v2) {
