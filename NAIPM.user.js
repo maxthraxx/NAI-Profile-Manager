@@ -727,7 +727,6 @@
                 const cleanTags = [...new Set(tags)]
                     .map(t => t.replace(/_/g, ' ').trim())
                     .filter(t => t)
-                    .slice(0, 30)
                     .join(", ");
 
                 if (!cleanTags) {
