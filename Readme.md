@@ -9,7 +9,7 @@ No more:
 
 This is your **personal prompt vault** — right inside the page, ready when you are.
 
-![Panel utama dalam mode terang](https://github.com/mikojiy/NAI-Profile-Manager/blob/main/Screenshot.png)
+![a](https://github.com/mikojiy/NAI-Profile-Manager/blob/main/Screenshot.png)
 
 ---
 
@@ -31,6 +31,7 @@ And yes — it remembers your last used profile, lets you drag the icon around, 
 ---
 
 ## 📥 How to Install
+[VIDEO TUTORIAL](https://www.youtube.com/watch?v=SLr24q8o4C8)
 
 1. **Install Tampermonkey**  
    → [tampermonkey.net](https://www.tampermonkey.net/) (works on Chrome, Firefox, Edge)
