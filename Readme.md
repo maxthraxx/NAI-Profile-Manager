@@ -8,6 +8,8 @@ Losing your favorite settings after a browser refresh
 Typing the same long tags over and over
 This is your personal prompt vault — right inside the page, ready when you are.
 
+![ss](https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/Screenshot.png)
+
 > **A Tampermonkey script for NovelAI Image Generator**  
 > Full support for **Negative Prompts**, **Global Variables**, **Wildcards**, **Danbooru import**, **Profile management**, and more — with **auto language detection** (English / Bahasa Indonesia / 日本語).
 
