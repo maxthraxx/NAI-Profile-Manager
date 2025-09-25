@@ -8,6 +8,31 @@
 
 ---
 
+### 📥 インストール方法
+
+1. **Tampermonkey をインストール**  
+　→ [tampermonkey.net](https://tampermonkey.net) から（Chrome・Firefox・Edge に対応）
+
+2. **下のリンクをクリック**  
+　→ [スクリプトをインストール](https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js)  
+　（クリックすると Tampermonkey が自動で開き、「このスクリプトを追加しますか？」と聞いてきます）
+
+3. **「インストール」をクリック**  
+　その後、NovelAI の画像生成ページを開いてください：  
+　→ https://novelai.net/image
+
+4. **画面の隅に小さな 📝 アイコンが表示されます**  
+　これが、あなたのコントロールセンターです！
+
+> 💡 **アイコンが見えない場合**：  
+> ブラウザの拡張機能画面（`chrome://extensions` など）で、  
+> **開発者モードをオン** → Tampermonkey の **「詳細」** を開き →  
+> **「ユーザースクリプトの実行を許可」** にチェックを入れてください。
+
+これで準備完了！あとは自由にプロファイルを活用してください 🎉
+
+---
+
 ## 🎯 プロンプトプロファイル
 
 よく使うプロンプトの組み合わせを「プロファイル」として保存できます。
