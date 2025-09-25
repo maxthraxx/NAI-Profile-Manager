@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         NovelAI Profile Manager
+// @name         NovelAI Prompt Profiles
 // @namespace    http://tampermonkey.net/
 // @author       Mikojiy
 // @updateURL    https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js
