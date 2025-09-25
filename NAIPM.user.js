@@ -1971,7 +1971,7 @@
                 const match = text.match(/@version\s+([0-9.]+)/);
                 if (!match) return;
                 const latestVersion = match[1];
-                const comparison = compareVersions(latestVersion, '1.8.8');
+                const comparison = compareVersions(latestVersion, '2.0');
                 if (comparison > 0 && !document.getElementById('nai-update-notice')) {
                     const notice = document.createElement('div');
                     notice.id = 'nai-update-notice';
