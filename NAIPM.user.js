@@ -4,26 +4,22 @@
 // @author       Mikojiy
 // @updateURL    https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js
 // @downloadURL  https://raw.githubusercontent.com/mikojiy/NAI-Profile-Manager/main/NAIPM.user.js
-// @version      2.0
+// @version      2.0.1
 // @description  Prompt profiles made easy for NovelAI.
 // @match        https://novelai.net/image
 // @grant        none
 // ==/UserScript==
-
 // ── Script Info ─────────────────────────────
 // Repository: https://github.com/mikojiy/NAI-Profile-Manager
 // ────────────────────────────────────────────
-
 (function () {
     'use strict';
-
     // === LANGUAGE SUPPORT ===
     const LANGUAGES = {
         'id': 'Bahasa Indonesia',
         'en': 'English',
         'ja': '日本語'
     };
-
     const STRINGS = {
         id: {
             ready: "Siap digunakan 🎯",
@@ -59,11 +55,15 @@
             deletedNone: name => `🗑️ "${name}" dihapus. Tidak ada profil tersisa.`,
             confirmClearAll: "⚠️ Hapus SEMUA profil? Tindakan ini tidak bisa dibatalkan.",
             clearedAll: "🧹 Semua data dihapus.",
-            swapPrompt: (name, pos) => `Tukar "${name}" dengan nomor berapa?\nMasukkan 1-${profiles.length}\n(Saat ini di posisi ${pos})`,
+            swapPrompt: (name, pos) => `Tukar "${name}" dengan nomor berapa?
+Masukkan 1-${profiles.length}
+(Saat ini di posisi ${pos})`,
             invalidPos: "❌ Posisi tidak valid.",
             alreadyThere: "ℹ️ Sudah di posisi itu.",
             swapped: (name, pos) => `✅ "${name}" ditukar dengan profil #${pos}.`,
-            danbooruPrompt: (last) => `📌 Ambil prompt dari Danbooru\nMasukkan ID posting (contoh: 789532)\nTerakhir dipakai: ${last || 'Tidak ada'}`,
+            danbooruPrompt: (last) => `📌 Ambil prompt dari Danbooru
+Masukkan ID posting (contoh: 789532)
+Terakhir dipakai: ${last || 'Tidak ada'}`,
             danbooruInvalidId: "❌ ID harus angka saja.",
             danbooruFetching: id => `📥 Mengambil data Danbooru #${id}...`,
             danbooruApplying: id => `🔧 Menerapkan prompt dari Danbooru #${id}...`,
@@ -152,11 +152,15 @@
             deletedNone: name => `🗑️ Deleted "${name}". No profiles left.`,
             confirmClearAll: "⚠️ Delete ALL profiles? This can't be undone.",
             clearedAll: "🧹 Cleared everything.",
-            swapPrompt: (name, pos) => `Swap "${name}" with which number?\nEnter 1-${profiles.length}\n(Currently at ${pos})`,
+            swapPrompt: (name, pos) => `Swap "${name}" with which number?
+Enter 1-${profiles.length}
+(Currently at ${pos})`,
             invalidPos: "❌ Invalid position.",
             alreadyThere: "ℹ️ Already there.",
             swapped: (name, pos) => `✅ Swapped "${name}" with profile #${pos}.`,
-            danbooruPrompt: (last) => `📌 Pull prompt from Danbooru\nEnter post ID (like: 789532)\nLast used: ${last || 'None'}`,
+            danbooruPrompt: (last) => `📌 Pull prompt from Danbooru
+Enter post ID (like: 789532)
+Last used: ${last || 'None'}`,
             danbooruInvalidId: "❌ ID must be numbers only.",
             danbooruFetching: id => `📥 Fetching Danbooru #${id}...`,
             danbooruApplying: id => `🔧 Applying prompt from Danbooru #${id}...`,
@@ -245,11 +249,15 @@
             deletedNone: name => `🗑️ "${name}" を削除しました。プロファイルが残っていません。`,
             confirmClearAll: "⚠️ 全てのプロファイルを削除しますか？元に戻せません。",
             clearedAll: "🧹 全てクリアしました。",
-            swapPrompt: (name, pos) => `"${name}" をどの番号と交換しますか？\n1～${profiles.length} を入力\n（現在位置: ${pos}）`,
+            swapPrompt: (name, pos) => `"${name}" をどの番号と交換しますか？
+1～${profiles.length} を入力
+（現在位置: ${pos}）`,
             invalidPos: "❌ 無効な位置です。",
             alreadyThere: "ℹ️ すでにその位置にいます。",
             swapped: (name, pos) => `✅ "${name}" をプロファイル #${pos} と交換しました。`,
-            danbooruPrompt: (last) => `📌 Danbooruからプロンプトを取得\n投稿IDを入力（例: 789532）\n前回使用: ${last || 'なし'}`,
+            danbooruPrompt: (last) => `📌 Danbooruからプロンプトを取得
+投稿IDを入力（例: 789532）
+前回使用: ${last || 'なし'}`,
             danbooruInvalidId: "❌ IDは数字のみです。",
             danbooruFetching: id => `📥 Danbooru #${id} を取得中...`,
             danbooruApplying: id => `🔧 Danbooru #${id} のプロンプトを適用中...`,
@@ -305,7 +313,6 @@
             updateNow: "今すぐ更新"
         }
     };
-
     // Detect language
     const LANG_KEY = "nai_ui_language";
     let currentLang = localStorage.getItem(LANG_KEY);
@@ -318,7 +325,6 @@
         const str = STRINGS[currentLang][key];
         return typeof str === 'function' ? str : (str || STRINGS.en[key] || key);
     };
-
     // === ORIGINAL CONSTANTS (unchanged) ===
     const STORAGE_KEY = "nai_prompt_profiles_v2";
     const LAST_PROFILE_KEY = "nai_last_profile";
@@ -328,14 +334,18 @@
     const LAST_ID_KEY = "nai_last_danbooru_id";
     const GLOBAL_VARIABLES_KEY = "nai_global_variables";
     const WILDCARDS_KEY = "nai_wildcards";
+    const WILDCARD_REMAINING_KEY = "nai_wildcard_remaining";
+    let wildcardRemaining = {};
     let profiles = [];
     let lastProfileName = localStorage.getItem(LAST_PROFILE_KEY);
     let lastId = localStorage.getItem(LAST_ID_KEY) || "";
     let blacklistTags = [];
     let globalVariables = {};
     let wildcards = {};
-
     // Load all data
+    try {
+    wildcardRemaining = JSON.parse(localStorage.getItem(WILDCARD_REMAINING_KEY) || "{}");
+} catch (e) {}
     try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -350,19 +360,17 @@
     try { blacklistTags = (localStorage.getItem(BLACKLIST_KEY) || "").split(',').map(t => t.trim().toLowerCase()).filter(t => t); } catch (e) {}
     try { globalVariables = JSON.parse(localStorage.getItem(GLOBAL_VARIABLES_KEY) || "{}"); } catch (e) {}
     try { wildcards = JSON.parse(localStorage.getItem(WILDCARDS_KEY) || "{}"); } catch (e) {}
-
     function saveToStorage() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles));
         localStorage.setItem(BLACKLIST_KEY, blacklistTags.join(', '));
         localStorage.setItem(GLOBAL_VARIABLES_KEY, JSON.stringify(globalVariables));
         localStorage.setItem(WILDCARDS_KEY, JSON.stringify(wildcards));
+        localStorage.setItem(WILDCARD_REMAINING_KEY, JSON.stringify(wildcardRemaining));
     }
-
     function setLastProfile(name) {
         lastProfileName = name;
         localStorage.setItem(LAST_PROFILE_KEY, name);
     }
-
     // --- FIND EDITORS ---
     function findPositiveEditor() {
         return document.querySelector('.image-gen-prompt-main .ProseMirror') ||
@@ -396,7 +404,6 @@
         }
         return null;
     }
-
     // --- REPLACE GLOBAL VARIABLES ---
     function replaceGlobalVariables(text) {
         if (!text) return text;
@@ -415,7 +422,6 @@
         }
         return result;
     }
-
     // --- APPLY TO POSITIVE ---
     async function applyTextToEditor(text, statusEl) {
         if (!text) {
@@ -471,7 +477,6 @@
             return false;
         }
     }
-
     // --- APPLY TO NEGATIVE ---
     async function applyTextToNegativeEditor(text, statusEl) {
         if (!text) {
@@ -527,7 +532,6 @@
             return false;
         }
     }
-
     // --- APPEND TO POSITIVE ---
     async function applyTextToEditorAppend(text, statusEl) {
         if (!text?.trim()) {
@@ -602,7 +606,6 @@
             return false;
         }
     }
-
     // --- APPEND TO NEGATIVE ---
     async function applyTextToNegativeEditorAppend(text, statusEl) {
         if (!text?.trim()) {
@@ -677,7 +680,6 @@
             return false;
         }
     }
-
     // --- FILL VARIABLES DIALOG ---
     function fillVariablesTemporarily(content, negativeContent, callback) {
         const allContent = content + " " + negativeContent;
@@ -689,7 +691,7 @@
         regex.lastIndex = 0;
         while ((match = regex.exec(allContent)) !== null) {
             const key = match[1];
-            if (!seen.has(key) && key !== "DB") {
+            if (!seen.has(key) && key !== "DB" && globalVariables[key] === undefined) {
                 seen.add(key);
                 matches.push(key);
             }
@@ -785,22 +787,58 @@
         applyBtn.onclick = async () => {
             let filledPositive = content;
             let filledNegative = negativeContent;
-            const selects = dialog.querySelectorAll('select[data-type="wildcard"]');
-            selects.forEach(sel => {
-                const key = sel.dataset.key;
-                const value = sel.value;
-                if (value) {
-                    const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                    const pattern = new RegExp(`\\[${escapedKey}\\]`, 'g');
-                    filledPositive = filledPositive.replace(pattern, value);
-                    filledNegative = filledNegative.replace(pattern, value);
-                } else {
-                    const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                    const pattern = new RegExp(`\\[${escapedKey}\\]\\s*,?\\s*`, 'g');
-                    filledPositive = filledPositive.replace(pattern, '');
-                    filledNegative = filledNegative.replace(pattern, '');
-                }
-            });
+const selects = dialog.querySelectorAll('select[data-type="wildcard"]');
+selects.forEach(sel => {
+    const key = sel.dataset.key;
+    const value = sel.value;
+    const options = wildcards[key] || [];
+
+    if (value) {
+        // Manual selection: replace all with same value
+        const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const pattern = new RegExp(`\\[${escapedKey}\\]`, 'g');
+        filledPositive = filledPositive.replace(pattern, value);
+        filledNegative = filledNegative.replace(pattern, value);
+        // Reset remaining for this key since user chose manually
+        wildcardRemaining[key] = [...options];
+        delete wildcardRemaining[key]; // or just reset
+        localStorage.setItem(WILDCARD_REMAINING_KEY, JSON.stringify(wildcardRemaining));
+    } else {
+        if (options.length === 0) {
+            const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const pattern = new RegExp(`\\[${escapedKey}\\]\\s*,?\\s*`, 'g');
+            filledPositive = filledPositive.replace(pattern, '');
+            filledNegative = filledNegative.replace(pattern, '');
+            return;
+        }
+
+        // Get remaining options for this key
+        let remaining = wildcardRemaining[key] || [...options];
+
+        // If no remaining, refill and shuffle
+        if (remaining.length === 0) {
+            remaining = [...options];
+        }
+
+        // Shuffle if it's a fresh list (only once per cycle)
+        if (remaining.length === options.length) {
+            for (let i = remaining.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+            }
+        }
+
+        // Pick first
+        const chosen = remaining.shift();
+        wildcardRemaining[key] = remaining;
+        localStorage.setItem(WILDCARD_REMAINING_KEY, JSON.stringify(wildcardRemaining));
+
+        const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const pattern = new RegExp(`\\[${escapedKey}\\]`, 'g');
+        filledPositive = filledPositive.replace(pattern, chosen);
+        filledNegative = filledNegative.replace(pattern, chosen);
+    }
+});
             const textareas = dialog.querySelectorAll('textarea[data-type="manual"]');
             textareas.forEach(ta => {
                 const key = ta.dataset.key;
@@ -862,7 +900,6 @@
             callback(null, null);
         };
     }
-
     function updateSelectOptions(select, selectedName = null) {
         select.innerHTML = "";
         if (profiles.length === 0) {
@@ -885,13 +922,11 @@
             select.selectedIndex = 0;
         }
     }
-
     let panel = null;
     let select = null;
     let taPositive = null;
     let taNegative = null;
     let status = null;
-
     function createPanelOnce() {
         if (document.getElementById('nai-profiles-panel')) return;
         const container = document.querySelector('.image-gen-prompt-main') ||
@@ -905,7 +940,6 @@
             const posStr = localStorage.getItem(ICON_POS_KEY);
             if (posStr) savedPos = JSON.parse(posStr);
         } catch (e) {}
-
         const toggle = document.createElement('div');
         toggle.id = "nai-profiles-toggle";
         Object.assign(toggle.style, {
@@ -959,7 +993,6 @@
             } catch (e) {}
         });
         document.body.appendChild(toggle);
-
         panel = document.createElement('div');
         panel.id = "nai-profiles-panel";
         Object.assign(panel.style, {
@@ -976,7 +1009,6 @@
             overflow: "hidden",
             boxSizing: "border-box"
         });
-
         status = document.createElement('div');
         Object.assign(status.style, {
             padding: "10px",
@@ -988,7 +1020,6 @@
             fontWeight: "500"
         });
         status.textContent = t('ready');
-
         const hdr = document.createElement('div');
         Object.assign(hdr.style, {
             display: "flex",
@@ -1000,7 +1031,6 @@
             fontSize: "16px"
         });
         hdr.textContent = t('profilesTitle');
-
         const btnDarkMode = document.createElement('button');
         btnDarkMode.textContent = "🌙";
         btnDarkMode.title = t('toggleDark');
@@ -1018,7 +1048,6 @@
             justifyContent: "center",
             marginLeft: "8px"
         });
-
         const btnGlobalVars = document.createElement('button');
         btnGlobalVars.innerHTML = "🔤";
         btnGlobalVars.title = t('manageGlobalVars');
@@ -1112,7 +1141,6 @@
                 }
             });
         };
-
         const btnWildcards = document.createElement('button');
         btnWildcards.innerHTML = "🎲";
         btnWildcards.title = t('manageWildcards');
@@ -1206,7 +1234,6 @@
                 }
             });
         };
-
         const btnSettings = document.createElement('button');
         btnSettings.innerHTML = "⚙️";
         btnSettings.title = t('settingsBlacklist');
@@ -1290,7 +1317,6 @@
                 }
             });
         };
-
         // === LANGUAGE BUTTON ===
         const btnLang = document.createElement('button');
         btnLang.innerHTML = "🌐";
@@ -1351,7 +1377,6 @@
             };
             document.addEventListener('click', handleClickOutside);
         };
-
         hdr.appendChild(btnDarkMode);
         hdr.appendChild(btnGlobalVars);
         hdr.appendChild(btnWildcards);
@@ -1377,11 +1402,9 @@
         btnClose.onmouseout = () => btnClose.style.color = "#94a3b8";
         btnClose.onclick = () => panel.style.display = "none";
         hdr.appendChild(btnClose);
-
         const inner = document.createElement('div');
         inner.style.padding = "16px";
         inner.style.boxSizing = "border-box";
-
         select = document.createElement('select');
         Object.assign(select.style, {
             width: "100%",
@@ -1399,7 +1422,6 @@
         select.onblur = () => select.style.borderColor = "#cbd5e1";
         updateSelectOptions(select, lastProfileName);
         inner.appendChild(select);
-
         taPositive = document.createElement('textarea');
         Object.assign(taPositive.style, {
             width: "100%",
@@ -1418,7 +1440,6 @@
         });
         taPositive.placeholder = t('positivePlaceholder');
         inner.appendChild(taPositive);
-
         taNegative = document.createElement('textarea');
         Object.assign(taNegative.style, {
             width: "100%",
@@ -1437,13 +1458,11 @@
         });
         taNegative.placeholder = t('negativePlaceholder');
         inner.appendChild(taNegative);
-
         const topBtns = document.createElement('div');
         topBtns.style.display = "grid";
         topBtns.style.gridTemplateColumns = "1fr 1fr";
         topBtns.style.gap = "10px";
         topBtns.style.marginBottom = "16px";
-
         function mkBtn(label, cb, bg = "#3b82f6", color = "#fff") {
             const b = document.createElement('button');
             b.textContent = label;
@@ -1469,7 +1488,6 @@
             b.onclick = cb;
             return b;
         }
-
         const btnOverride = mkBtn(t('override'), async () => {
             const name = select.value;
             if (!name) return;
@@ -1488,7 +1506,6 @@
                 applyTextToNegativeEditor(finalNegative, status).catch(console.error);
             });
         }, "#0ea5e9");
-
         const btnAppend = mkBtn(t('append'), async () => {
             const name = select.value;
             if (!name) return;
@@ -1504,17 +1521,14 @@
                 applyTextToNegativeEditorAppend(finalNegative, status).catch(console.error);
             });
         }, "#84cc16");
-
         topBtns.appendChild(btnOverride);
         topBtns.appendChild(btnAppend);
         inner.appendChild(topBtns);
-
         const grid = document.createElement('div');
         grid.style.display = "grid";
         grid.style.gridTemplateColumns = "repeat(4, 1fr)";
         grid.style.gap = "8px";
         grid.style.marginBottom = "16px";
-
         const btnNew = mkBtn(t('newProfile'), () => {
             const input = prompt(t('enterProfileName'));
             if (!input || !input.trim()) return;
@@ -1531,7 +1545,6 @@
             setLastProfile(name);
             status.textContent = t('createdProfile')(name);
         }, "#10b981");
-
         const btnSave = mkBtn(t('saveProfile'), () => {
             const name = select.value;
             if (!name || !profiles.some(p => p.name === name)) {
@@ -1545,7 +1558,6 @@
             syncTextareas();
             status.textContent = t('savedProfile')(name);
         });
-
         const btnRename = mkBtn(t('renameProfile'), () => {
             const oldName = select.value;
             if (!oldName) return;
@@ -1565,7 +1577,6 @@
             syncTextareas();
             status.textContent = t('renamed')(oldName, trimmed);
         });
-
         const btnDelete = mkBtn(t('deleteProfile'), () => {
             const name = select.value;
             if (!name) return;
@@ -1591,7 +1602,6 @@
                 }
             }
         }, "#ef4444");
-
         const btnClearAll = mkBtn(t('clearAll'), () => {
             if (confirm(t('confirmClearAll'))) {
                 profiles = [];
@@ -1610,7 +1620,6 @@
                 status.textContent = t('clearedAll');
             }
         }, "#dc2626");
-
         const btnReorder = mkBtn(t('reorder'), () => {
             const currentName = select.value;
             if (!currentName) {
@@ -1636,7 +1645,6 @@
             select.dispatchEvent(new Event('change'));
             status.textContent = t('swapped')(currentName, targetIndex + 1);
         }, "#a855f7");
-
         const btnBooruById = mkBtn(t('danbooru'), () => {
             const idInput = prompt(t('danbooruPrompt')(lastId));
             if (!idInput) return;
@@ -1693,19 +1701,16 @@
                 status.textContent = t('danbooruError')(message);
             });
         }, "#8b5cf6");
-
         [btnNew, btnSave, btnRename, btnDelete, btnClearAll, btnReorder, btnBooruById].forEach(b => grid.appendChild(b));
         inner.appendChild(grid);
-
         const fullBackupRow = document.createElement('div');
         fullBackupRow.style.display = "grid";
         fullBackupRow.style.gridTemplateColumns = "1fr 1fr";
         fullBackupRow.style.gap = "8px";
         fullBackupRow.style.marginTop = "10px";
-
         const btnFullBackup = mkBtn(t('fullBackup'), () => {
             const backup = {
-                version: "1.8.8-full",
+                version: "2.0.1-full",
                 profiles: profiles,
                 blacklist: blacklistTags,
                 globalVariables: globalVariables,
@@ -1724,7 +1729,6 @@
             URL.revokeObjectURL(url);
             status.textContent = t('backupSaved');
         }, "#8b5cf6", "#fff");
-
         const btnFullRestore = mkBtn(t('fullRestore'), () => {
             const input = document.createElement('input');
             input.type = 'file';
@@ -1832,16 +1836,13 @@
             };
             input.click();
         }, "#06b6d4", "#fff");
-
         fullBackupRow.appendChild(btnFullBackup);
         fullBackupRow.appendChild(btnFullRestore);
         inner.appendChild(fullBackupRow);
-
         panel.appendChild(status);
         panel.appendChild(hdr);
         panel.appendChild(inner);
         document.body.appendChild(panel);
-
         // Dark mode init
         let isDarkMode = false;
         try {
@@ -1917,14 +1918,12 @@
                 hdr.style.color = "#1e40af";
             }
         };
-
         function syncTextareas() {
             taPositive.dispatchEvent(new Event('input', { bubbles: true }));
             taPositive.dispatchEvent(new Event('change', { bubbles: true }));
             taNegative.dispatchEvent(new Event('input', { bubbles: true }));
             taNegative.dispatchEvent(new Event('change', { bubbles: true }));
         }
-
         select.addEventListener('change', () => {
             const name = select.value;
             const profile = profiles.find(p => p.name === name);
@@ -1934,7 +1933,6 @@
             if (name) setLastProfile(name);
             status.textContent = name ? `📄 Loaded: ${name}` : "No profile selected.";
         });
-
         toggle.addEventListener('click', (e) => {
             e.stopPropagation();
             const rect = toggle.getBoundingClientRect();
@@ -1951,7 +1949,6 @@
             }
             panel.style.display = panel.style.display === "none" ? "block" : "none";
         });
-
         // Auto update
         function compareVersions(v1, v2) {
             const a = v1.split('.').map(Number);
@@ -1971,8 +1968,8 @@
                 const match = text.match(/@version\s+([0-9.]+)/);
                 if (!match) return;
                 const latestVersion = match[1];
-                const currentVersion = GM_info.script.version;
-const comparison = compareVersions(latestVersion, currentVersion);
+                const currentVersion = "2.0.1"; // Updated version
+                const comparison = compareVersions(latestVersion, currentVersion);
                 if (comparison > 0 && !document.getElementById('nai-update-notice')) {
                     const notice = document.createElement('div');
                     notice.id = 'nai-update-notice';
@@ -2017,13 +2014,11 @@ const comparison = compareVersions(latestVersion, currentVersion);
             }
         }, 3000);
     }
-
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', createPanelOnce);
     } else {
         createPanelOnce();
     }
-
 // === KEYBOARD SHORTCUTS (MULTILINGUAL, MINIMAL CHANGE) ===
 function applyProfileByIndex(index) {
     if (index < 0 || index >= profiles.length) {
@@ -2048,11 +2043,9 @@ function applyProfileByIndex(index) {
         status.textContent = appliedMsg;
     });
 }
-
 function quickSearchProfiles(query) {
     query = query.trim().toLowerCase();
     let targetIndex = -1;
-
     const num = parseInt(query, 10);
     if (!isNaN(num) && num >= 1 && num <= profiles.length) {
         targetIndex = num - 1;
@@ -2064,7 +2057,6 @@ function quickSearchProfiles(query) {
             }
         }
     }
-
     if (targetIndex !== -1) {
         applyProfileByIndex(targetIndex);
     } else {
@@ -2076,7 +2068,6 @@ function quickSearchProfiles(query) {
         status.textContent = noMatchMsg;
     }
 }
-
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && !e.altKey && !e.shiftKey) {
         // Cegah saat fokus di input/editor (opsional, tapi disarankan)
@@ -2089,13 +2080,11 @@ document.addEventListener('keydown', (e) => {
             applyProfileByIndex(9);
         } else if (e.key === 'q' || e.key === 'Q') {
             e.preventDefault();
-
             const promptTitle = {
                 id: "🔍 Pencarian Cepat Profil\nKetik nomor atau nama profil:",
                 en: "🔍 Quick Profile Search\nEnter number or name:",
                 ja: "🔍 プロファイルを検索\n番号または名前を入力:"
             }[currentLang] || "🔍 Quick Profile Search\nEnter number or name:";
-
             const query = prompt(promptTitle);
             if (query) {
                 quickSearchProfiles(query);
@@ -2103,5 +2092,4 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
-
 })();
